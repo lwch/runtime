@@ -1,4 +1,4 @@
-package aux
+package runtime
 
 // Assert assert
 func Assert(err error) {
