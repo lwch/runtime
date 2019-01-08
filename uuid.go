@@ -24,6 +24,7 @@ func UUID(n int) (string, error) {
 			if err := ret.WriteByte(chars[int(ch)%len(chars)]); err != nil {
 				return "", err
 			}
+			n--
 		}
 	}
 	return ret.String(), nil
