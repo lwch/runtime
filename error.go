@@ -6,20 +6,9 @@ import (
 	"strings"
 )
 
-// Exception exception
-type Exception []string
-
-func (e Exception) Error() string {
-	return strings.Join(e, "\n")
-}
-
-func throw(msg string, args ...interface{}) {
-	panic(Trace(msg, args...))
-}
-
 // Trace stack trace
-func Trace(msg string, args ...interface{}) (logs Exception) {
-	logs = Exception{fmt.Sprintf(msg, args...)}
+func Trace(prefix string) []string {
+	var logs []string
 	n := 1
 	for {
 		n++
@@ -32,10 +21,9 @@ func Trace(msg string, args ...interface{}) (logs Exception) {
 		if strings.HasPrefix(name, "runtime.") {
 			continue
 		}
-		fn := file[strings.Index(file, "/src/")+5:]
-		logs = append(logs, fmt.Sprintf("\t(%s:%d) %s", fn, line, name))
+		logs = append(logs, fmt.Sprintf(prefix+"(%s:%d) %s", file, line, name))
 	}
-	return
+	return logs
 }
 
 func catch(err *error, handler ...func()) {
