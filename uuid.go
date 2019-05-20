@@ -11,8 +11,11 @@ func init() {
 }
 
 // UUID generate uuid string with n
-func UUID(n int) (string, error) {
-	const chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-"
+func UUID(n int, chars ...string) (string, error) {
+	if len(chars) == 0 {
+		chars = []string{"0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-"}
+	}
+	charMap := chars[0]
 	var ret bytes.Buffer
 	for n > 0 {
 		buf := make([]byte, n)
@@ -21,7 +24,7 @@ func UUID(n int) (string, error) {
 			return "", err
 		}
 		for _, ch := range buf[:readen] {
-			if err := ret.WriteByte(chars[int(ch)%len(chars)]); err != nil {
+			if err := ret.WriteByte(charMap[int(ch)%len(charMap)]); err != nil {
 				return "", err
 			}
 			n--
