@@ -25,12 +25,3 @@ func Trace(prefix string) []string {
 	}
 	return logs
 }
-
-func catch(err *error, handler ...func()) {
-	if e := recover(); e != nil {
-		*err = e.(error)
-	}
-	for _, h := range handler {
-		h()
-	}
-}
