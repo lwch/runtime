@@ -1,6 +1,8 @@
 package runtime
 
-import "time"
+import (
+	"time"
+)
 
 // Assert assert
 func Assert(err error) {
